@@ -1,0 +1,22 @@
+<div>
+  <div>
+      <p> From Album: <select ng-model="$ctrl.query">
+          <option ng-repeat="album in $ctrl.albums" value = {{album}}>{{album}}</option>
+          <option value=''>All</option>
+        </select>
+      </p>
+      <p> Sort: <select ng-model="$ctrl.order">
+        <option value="song_name">Name</option>
+        <option value="time">Length</option>
+        </select>
+      </p>
+  </div>
+  <div>
+      <iframe width="560" height="315" src="{{$ctrl.url}}" 
+              frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div ng-repeat="song in $ctrl.songs | filter:{album:$ctrl.query} | orderBy:$ctrl.order">
+      <img src="{{song.pic}}"/>
+      <p>{{song.album}} <a href="" ng-click="$ctrl.setSong(song.id)">{{song.song_name}}</a></p>
+  </div>
+</div>
