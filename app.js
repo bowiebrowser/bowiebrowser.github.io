@@ -1,6 +1,4 @@
 var songDetail = angular.module('songDetail',['ngRoute']);
-var allSongs;
-var mostRecentQuery="Lodger";
 
 var songApp = angular.module('songApp',
         ["ngRoute","songDetail"]
@@ -28,26 +26,44 @@ songApp.component('songList',{
             'Scary Monsters',
             "Let's Dance"
         ];
-        this.query=mostRecentQuery;
+        this.query='';
+        this.searchParam='album';
         self=this;
-
+    
         this.trustURL=function(url){
             return $sce.trustAsResourceUrl(url);
         };
          
-        this.setSong= function(songID){
-            console.log(songID);
+        this.setSong= function(song){
+            self.curr_song = song;
+            var songID = song.id;
             self.url = "https://www.youtube.com/embed/"+songID+"?autoplay=1";
         }
 
-        if(allSongs == undefined){
-            $http.get('jsons/songs.json').then((response)=>{
-                this.songs = response.data;
-                allSongs = this.songs;
-            });
-        } else {
-            this.songs = allSongs;
+        this.setQuery = function(key,value){
+            if(value.length>1){
+                //Only update the list of videos if we have a sufficiently long search term
+                var newSearchObj = {};
+                newSearchObj[key] = value;
+                self.searchObj=newSearchObj;
+
+            }else if(value == '-1'){
+                //Use a special key for all
+                var newSearchObj = {};
+                newSearchObj[key] = '';
+                self.searchObj=newSearchObj;
+            }
+            return self.searchObj;
         }
+        $http.get('jsons/songs.json').then((response)=>{
+            this.songs = response.data;
+            var firstSong = _.sample(this.songs);
+            this.curr_song = firstSong;
+            this.url = "https://www.youtube.com/embed/"+firstSong.id;
+            this.query = firstSong.album
+            this.searchObj={'album':this.query};
+        });
+        //start loading all the songs' lyrics after the display is "good"
     }],
 });
 

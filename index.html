@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="songApp">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+<link rel="stylesheet" href="css/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -8,7 +11,19 @@
 <script src="app.js"></script>
 </head>
 <body>
-    <h2>The David Bowie Database</h2>
-    <div ng-view></div>
+    <nav class="navbar" >
+        <div class="navbar-header" width=100%>
+            <a class="navbar-brand" href="#">BOWIE<span style="color: red">ONE</span>BROWSER</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" href="#AboutPanel">About</a></li>
+            <li><a class="nav-link" href="#AboutPanel">Songs</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div id="content">
+            <div ng-view></div>
+        </div>
+    </div>
 </body>
 </html>
