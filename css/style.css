@@ -45,3 +45,15 @@ h2{
     font-weight: bold;
     font-size: 1em;
 }
+
+.panel{
+    margin:10px;
+}
+/*
+.panel-right-side{
+    margin-right:20px;
+}
+@media (max-width: 767px) {
+    .panel-right-side { margin-left:20px; }
+}
+*/

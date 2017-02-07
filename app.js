@@ -1,69 +1,110 @@
 var songDetail = angular.module('songDetail',['ngRoute']);
 
+var bowieAlbums = [
+    'David Bowie',
+    'Space Oddity',
+    'The Man Who Sold the World',
+    'Hunky Dory',
+    'Ziggy Stardust',
+    'Aladdin Sane',
+    'Pin Ups',
+    'Diamond Dogs',
+    'Young Americans',
+    'Station to Station',
+    'Low',
+    'Heroes',
+    'Lodger',
+    'Scary Monsters',
+    "Let's Dance"
+];
+
 var songApp = angular.module('songApp',
         ["ngRoute","songDetail"]
 );
 
 songApp.component('songList',{
     templateUrl:'templates/song-list.template.html',
-    controller: ['$scope','$http',function songController($scope,$http){
+    controller: ['$scope','$http','$filter',
+        function songController($scope,$http,$filter){
+        /* Initialize Parameters
+         */
         this.song = '';
         this.url='';
-        this.albums = [
-            'David Bowie',
-            'Space Oddity',
-            'The Man Who Sold the World',
-            'Hunky Dory',
-            'Ziggy Stardust',
-            'Aladdin Sane',
-            'Pin Ups',
-            'Diamond Dogs',
-            'Young Americans',
-            'Station to Station',
-            'Low',
-            'Heroes',
-            'Lodger',
-            'Scary Monsters',
-            "Let's Dance"
-        ];
+        this.albums = bowieAlbums;
         this.query='';
         this.searchParam='album';
-        self=this;
+        this.queryResults={};
+        var self=this;
     
+        /* Enables page to display embedded youtube url
+         */
         this.trustURL=function(url){
             return $sce.trustAsResourceUrl(url);
         };
-         
-        this.setSong= function(song){
+        
+        /* Get the lyrics for the current song from its json
+         */
+        this.fetchLyrics= function(){
+            var lyric_json = "lyrics/"+self.curr_song.album+".json";
+            $http.get(lyric_json).then((response)=>{
+                lyrics = response.data[self.curr_song.song_name];
+                //hack to prevent duplicate ids in repeater
+                self.lyrics=_.map(lyrics,line=>{
+                    var obj = {};
+                    obj['line']=line;
+                    return obj;
+                });
+                console.log(self.lyrics);
+            });
+        }
+
+        /* Updates variables to show detail for a specific song
+         */ 
+        this.setSong= function(song,autoplay){
             self.curr_song = song;
             var songID = song.id;
-            self.url = "https://www.youtube.com/embed/"+songID+"?autoplay=1";
-        }
-
-        this.setQuery = function(key,value){
-            if(value.length>1){
-                //Only update the list of videos if we have a sufficiently long search term
-                var newSearchObj = {};
-                newSearchObj[key] = value;
-                self.searchObj=newSearchObj;
-
-            }else if(value == '-1'){
-                //Use a special key for all
-                var newSearchObj = {};
-                newSearchObj[key] = '';
-                self.searchObj=newSearchObj;
+            self.url = "https://www.youtube.com/embed/"+songID;
+            if(autoplay){
+                self.url+="?autoplay=1";
             }
-            return self.searchObj;
-        }
+            self.fetchLyrics();
+        };
+        
+        /* Updates the list of displayed values
+         */
+        this.updateQueryResults = function(){
+            console.log(self.order);
+            var searchObj = {};
+            searchObj[self.searchParam] = self.query;
+            self.queryResults=$filter('filter')(self.songs,searchObj,self.order);
+        };
+
+        /* Changes the list of displayed values based on a new query
+         */
+        this.updateByQuery = function(query){
+            self.query = query;
+            self.updateQueryResults();
+        } 
+
+        /* Updates the query result if enter was pressed
+         */
+        this.updateOnKeyPress = function(keyVal){
+            if(keyVal == 13){
+                self.updateQueryResults();
+            }
+        };
+
+        /* "main" function
+         * Get the initial state of the page after loading the song list
+         */
         $http.get('jsons/songs.json').then((response)=>{
             this.songs = response.data;
             var firstSong = _.sample(this.songs);
-            this.curr_song = firstSong;
-            this.url = "https://www.youtube.com/embed/"+firstSong.id;
-            this.query = firstSong.album
-            this.searchObj={'album':this.query};
+            this.setSong(firstSong);
+            this.query = firstSong.album;
+            this.updateQueryResults();
         });
-        //start loading all the songs' lyrics after the display is "good"
+
     }],
 });
 
