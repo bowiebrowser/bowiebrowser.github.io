@@ -1,67 +1,79 @@
-<div>
-    <div class="row">
-        <div class="col-md-6">
-          <div class="col-12">
-            <div class="panel panel-default" id="AboutPanel">
-                <div class="panel-body">
-                  <div class="text-center"> <h2>Search</h2></div>
-                  <p> Search By: <select ng-model="$ctrl.searchParam">
+<div class="container">
+<div class="panel panel-default">
+<div class="panel-body">
+<div class = "row">
+    <div class="col-md-6">
+                <div class="text-center">
+                    <h2>{{$ctrl.curr_song.album}} - {{$ctrl.curr_song.song_name}}</h2>
+                </div>
+                <div class="iframe-holder">
+                    <iframe src="{{$ctrl.url}}" frameborder="0" allowfullscreen>
+                    </iframe>
+                </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-12">
+            <div class="panel panel-default" style="margin-right:20px">
+            <div class="panel-body">
+            <div class="text-center"> <h2>Search</h2></div>
+            <div class="row">
+              <div class = "col-md-4 form-group">
+                  <label>Search By</label>
+                  <select class="form-control" id="searchTypeSelect" ng-model="$ctrl.searchParam">
                       <option value='album'>Album</option> 
                       <option value='song_name'>Song Name</option> 
                       <option value='year'>Year</option> 
                       <option value='$'>Any</option> 
-                    </select>
-                  </p>
-                  <p ng-hide="$ctrl.searchParam != 'album'">
-                    From Album: <select ng-model="$ctrl.query">
-                      <option ng-repeat="album in $ctrl.albums" value = {{album}}>{{album}}</option>
-                      <option value='-1'>All</option>
-                    </select>
-                  </p>
-                  <p ng-hide="$ctrl.searchParam=='album'">
-                      Search Term:<input ng-model="$ctrl.query"></p>
-                  <p> Sort: <select ng-model="$ctrl.order">
+                  </select>
+              </div>
+              <div ng-hide="$ctrl.searchParam != 'album'" class = "col-md-4 form-group">
+                  <label>Album</label>
+                  <select class="form-control" ng-model="$ctrl.query">
+                    <option ng-repeat="album in $ctrl.albums" value = {{album}}>{{album}}</option>
+                    <option value='-1'>All</option>
+                  </select>
+              </div>
+              <div ng-hide="$ctrl.searchParam=='album'" class="col-md-4 form-group">
+                  <label>Search Term</label>
+                  <input class="form-control" type="text" ng-model="$ctrl.query">
+              </div>
+              <div class="form-group col-md-4">
+                  <label>Sort By</label>
+                  <select class="form-control" ng-model="$ctrl.order">
                     <option value="song_name">Name</option>
                     <option value="time">Length</option>
                     <option value="track_number">Track Number</option>
-                    </select>
-                  </p>
-                </div>
-            </div>
-          </div> 
-          <div class="col-12">
-            <div class="panel panel-default tobottom">
-                <div class="panel-body">
-                    <div class="text-center">
-                        <h2>{{$ctrl.curr_song.album}} - {{$ctrl.curr_song.song_name}}</h2>
-                    </div>
-                    <div class="iframe-holder">
-                        <iframe src="{{$ctrl.url}}" frameborder="0" allowfullscreen>
-                        </iframe>
-                    </div>
+                  </select>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default" height="100%">
-                <div class="panel-body">
+            </div>
+            </div>
+            </div>
+            <div class="col-12">
               <div ng-repeat="song in $ctrl.songs | filter:$ctrl.setQuery($ctrl.searchParam,$ctrl.query) | orderBy:$ctrl.order">
+              <div class="panel panel-default" 
+                  style="margin-right:20px;margin-bottom:5px" 
+                  ng-click="$ctrl.setSong(song)">
+                <div class="panel-body" style="padding:5px">
                   <div class="row">
                       <div class="col-md-4">
                           <img src="{{song.pic}}"/>
                       </div>
                       <div class="col-md-8">
                         <p class="nav-link">{{song.album}} Track {{song.track_number}}: 
-                            <a href="" ng-click="$ctrl.setSong(song)">{{song.song_name}}</a>
+                            <a href="" >{{song.song_name}}</a>
                             ({{song.time}})
                         </p>
                       </div>
                   </div>
-                  <hr></hr>
+                </div>
+                </div>
               </div>
             </div>
-          </div>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>

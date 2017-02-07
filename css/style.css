@@ -1,5 +1,8 @@
 body {
-    background: #000 url(../assets/bowie_tiled_bg.jpg);
+    background: #fff url(../assets/aladdin-sane-bg.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50% 0;
 }
 .iframe-holder{
   position:relative;
@@ -20,7 +23,7 @@ iframe {
 }
 
 .panel{
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.8);
 }
 .navbar-brand{
     color: black;
@@ -41,8 +44,4 @@ h2{
     color: black;
     font-weight: bold;
     font-size: 1em;
-}
-
-.container{
-    display: table-cell;
 }
