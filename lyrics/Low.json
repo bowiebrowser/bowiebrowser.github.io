@@ -1,138 +1,193 @@
 {
-"Speed of Life":[
-""
-],
-"Breaking Glass":[
-"Baby, I've been",
-"Breaking glass in your room again",
-"Listen",
-"",
-"Don't look at the carpet",
-"I drew something awful on it",
-"See",
-"",
-"You're such a wonderful person",
-"But you got problems oh-oh-oh-oh",
-"I'll never touch you"
-],
-"What in the World":[
-"You're just a little girl with grey eyes",
-"Never mind, say something",
-"Wait until the crowd cries",
-"Oh, wait until the crowd cries",
-"You're just a little girl with grey eyes",
-"",
-"So deep in your room",
-"You never leave your room",
-"Something deep inside of me",
-"Yearning deep inside of me",
-"Talking through the gloom",
-"What in the world can you do",
-"What in the world can you do",
-"I'm in the mood for your love",
-"For your love",
-"For your love",
-"",
-"I'm just a little bit afraid of you",
-"Because love won't make you cry",
-"But, wait",
-"Until the crowd goes",
-"Oh, wait",
-"Until the crowd goes",
-"I'm just a little bit afraid of you",
-"",
-"",
-"Oh, what you going to say?",
-"Oh, what you going to do?",
-"Ah, what you going to be?",
-"To the real me",
-"To the real me"
-],
-"Sound and Vision":[
-"Don't you wonder sometimes",
-"'Bout sound and vision",
-"",
-"Blue, blue, electric blue",
-"That's the colour of my room",
-"Where I will live",
-"Blue, blue",
-"Pale blinds drawn all day",
-"Nothing to do, nothing to say",
-"Blue, blue",
-"I will sit right down",
-"Waiting for the gift of sound and vision",
-"And I will sing, waiting for the gift of sound and vision",
-"Drifting into my solitude",
-"Over my head",
-"",
-"Don't you wonder sometimes",
-"'Bout sound and vision"
-],
-"Always Crashing in the Same Car":[
-"I take it on the road",
-"Those kilometers and the red lights",
-"I was always looking left and right",
-"",
-"Oh, but I'm always crashing in the same car",
-"",
-"Jasmine, I saw you peeping",
-"As I pushed my foot down to the floor",
-"I was going round and round the hotel garage",
-"Must have been touching close to 94",
-"",
-"Oh, but I'm always crashing in the same car"
-],
-"Be My Wife":[
-"Sometimes you get so lonely",
-"Sometimes you get nowhere",
-"I've lived all over the world",
-"I've left every place",
-"",
-"Please be mine",
-"Share my life",
-"Stay with me",
-"Be my wife",
-"",
-"Sometimes you get so lonely",
-"Sometimes you get nowhere",
-"I've lived all over the world",
-"I've left every place",
-"",
-"Please be mine",
-"Share my life",
-"Stay with me",
-"Be my wife",
-"",
-"Sometimes you get so lonely",
-"",
-"We just keep going then, shall we?"
-],
-"A New Career in a New Town":[
-""
-],
-"Warszawa":[
-"Sula vie milejo",
-"Cheli venco deho",
-"Cheli venco deho",
-"Malio",
-"Helibo seyoman",
-"Cheli venco raero",
-"Malio",
-"Malio"
-],
-"Art Decade":[
-""
-],
-"Weeping Wall":[
-""
-],
-"Subterraneans":[
-"Share bright failing star",
-"",
-"Care-line",
-"Care-line",
-"Care-line",
-"Care-line",
-"Riding these Shirley, Shirley, Shirley umm"
-]
+"Speed of Life":{
+  "title":"Speed of Life",
+  "url":"Speed-of-Life",
+  "lyrics":[  
+""  
+]  
+
+},
+"Breaking Glass":{
+  "title":"Breaking Glass",
+  "url":"Breaking-Glass",
+  "lyrics":[  
+"Baby, I've been",  
+"Breaking glass in your room again",  
+"Listen",  
+"",  
+"Don't look at the carpet",  
+"I drew something awful on it",  
+"See",  
+"",  
+"You're such a wonderful person",  
+"But you got problems oh-oh-oh-oh",  
+"I'll never touch you"  
+]  
+
+},
+"What in the World":{
+  "title":"What in the World",
+  "url":"What-in-the-World",
+  "lyrics":[  
+"You're just a little girl with grey eyes",  
+"Never mind, say something",  
+"Wait until the crowd cries",  
+"Oh, wait until the crowd cries",  
+"You're just a little girl with grey eyes",  
+"",  
+"So deep in your room",  
+"You never leave your room",  
+"Something deep inside of me",  
+"Yearning deep inside of me",  
+"Talking through the gloom",  
+"What in the world can you do",  
+"What in the world can you do",  
+"I'm in the mood for your love",  
+"For your love",  
+"For your love",  
+"",  
+"I'm just a little bit afraid of you",  
+"Because love won't make you cry",  
+"But, wait",  
+"Until the crowd goes",  
+"Oh, wait",  
+"Until the crowd goes",  
+"I'm just a little bit afraid of you",  
+"",  
+"",  
+"Oh, what you going to say?",  
+"Oh, what you going to do?",  
+"Ah, what you going to be?",  
+"To the real me",  
+"To the real me"  
+]  
+
+},
+"Sound and Vision":{
+  "title":"Sound and Vision",
+  "url":"Sound-and-Vision",
+  "lyrics":[  
+"Don't you wonder sometimes",  
+"'Bout sound and vision",  
+"",  
+"Blue, blue, electric blue",  
+"That's the colour of my room",  
+"Where I will live",  
+"Blue, blue",  
+"Pale blinds drawn all day",  
+"Nothing to do, nothing to say",  
+"Blue, blue",  
+"I will sit right down",  
+"Waiting for the gift of sound and vision",  
+"And I will sing, waiting for the gift of sound and vision",  
+"Drifting into my solitude",  
+"Over my head",  
+"",  
+"Don't you wonder sometimes",  
+"'Bout sound and vision"  
+]  
+
+},
+"Always Crashing in the Same Car":{
+  "title":"Always Crashing in the Same Car",
+  "url":"Always-Crashing-in-the-Same-Car",
+  "lyrics":[  
+"I take it on the road",  
+"Those kilometers and the red lights",  
+"I was always looking left and right",  
+"",  
+"Oh, but I'm always crashing in the same car",  
+"",  
+"Jasmine, I saw you peeping",  
+"As I pushed my foot down to the floor",  
+"I was going round and round the hotel garage",  
+"Must have been touching close to 94",  
+"",  
+"Oh, but I'm always crashing in the same car"  
+]  
+
+},
+"Be My Wife":{
+  "title":"Be My Wife",
+  "url":"Be-My-Wife",
+  "lyrics":[  
+"Sometimes you get so lonely",  
+"Sometimes you get nowhere",  
+"I've lived all over the world",  
+"I've left every place",  
+"",  
+"Please be mine",  
+"Share my life",  
+"Stay with me",  
+"Be my wife",  
+"",  
+"Sometimes you get so lonely",  
+"Sometimes you get nowhere",  
+"I've lived all over the world",  
+"I've left every place",  
+"",  
+"Please be mine",  
+"Share my life",  
+"Stay with me",  
+"Be my wife",  
+"",  
+"Sometimes you get so lonely",  
+"",  
+"We just keep going then, shall we?"  
+]  
+
+},
+"A New Career in a New Town":{
+  "title":"A New Career in a New Town",
+  "url":"A-New-Career-in-a-New-Town",
+  "lyrics":[  
+""  
+]  
+
+},
+"Warszawa":{
+  "title":"Warszawa",
+  "url":"Warszawa",
+  "lyrics":[  
+"Sula vie milejo",  
+"Cheli venco deho",  
+"Cheli venco deho",  
+"Malio",  
+"Helibo seyoman",  
+"Cheli venco raero",  
+"Malio",  
+"Malio"  
+]  
+
+},
+"Art Decade":{
+  "title":"Art Decade",
+  "url":"Art-Decade",
+  "lyrics":[  
+""  
+]  
+
+},
+"Weeping Wall":{
+  "title":"Weeping Wall",
+  "url":"Weeping-Wall",
+  "lyrics":[  
+""  
+]  
+
+},
+"Subterraneans":{
+  "title":"Subterraneans",
+  "url":"Subterraneans",
+  "lyrics":[  
+"Share bright failing star",  
+"",  
+"Care-line",  
+"Care-line",  
+"Care-line",  
+"Care-line",  
+"Riding these Shirley, Shirley, Shirley umm"  
+]  
+
+}
 }

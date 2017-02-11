@@ -17,11 +17,26 @@
                 </div>
                 </div>
             </div>
-            <div class="col-12 text-center">
+            <div class="col-12">
                 <div class="panel panel-default panel-left-side">
                 <div class="panel-body">
-                    <h2>Lyrics</h2>
-                    <span class="nav-link" ng-repeat="line in $ctrl.lyrics">{{line.line}}<br></span>
+                    <h3 class="text-center">About</h3>
+                    <div class="row text-center">
+                        <div class="col-sm-4"><span class='nav-link'>Song: </span>{{$ctrl.curr_song.song_name}}</div>
+                        <div class="col-sm-4"><span class='nav-link'>Album: </span>{{$ctrl.curr_song.album}}</div>
+                        <div class="col-sm-4"><span class='nav-link'>Track Number: </span>{{$ctrl.curr_song.track_number}}</div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-sm-4"><span class='nav-link'>Duration: </span>{{$ctrl.curr_song.time}}</div>
+                        <div class="col-sm-4"><span class='nav-link'>Video/Audio: </span>
+                        <a href='https://www.youtube.com/watch?v={{$ctrl.curr_song.id}}' target="_blank">Youtube</a></div>
+                        <div class="col-sm-4"><span class='nav-link'>Lyrics: </span>
+                        <a href='https://genius.com/David-bowie-{{$ctrl.lyrics_src}}-lyrics' target="_blank">Genius</a></div>
+                    </div>
+                    <h3 class="text-center">Lyrics</h3>
+                    <div class="text-center">
+                        <span ng-repeat="line in $ctrl.lyrics">{{line.line}}<br></span>
+                    </div>
                 </div>
                 </div>
             </div>
@@ -40,6 +55,7 @@
                       <option value='album'>Album</option> 
                       <option value='song_name'>Song Name</option> 
                       <option value='year'>Year</option> 
+                      <option value='lyrics'>Lyrics</option> 
                       <option value='$'>Any</option> 
                   </select>
               </div>

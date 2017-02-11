@@ -15,7 +15,17 @@ var bowieAlbums = [
     'Heroes',
     'Lodger',
     'Scary Monsters',
-    "Let's Dance"
+    "Let's Dance",
+    "Tonight",
+    "Never Let Me Down",
+    "Black Tie White Noise",
+    "Outside",
+    "Earthling",
+    "Hours",
+    "Heathen",
+    "Reality",
+    "The Next Day",
+    "Blackstar"
 ];
 
 var songApp = angular.module('songApp',
@@ -47,16 +57,18 @@ songApp.component('songList',{
         this.fetchLyrics= function(){
             var lyric_json = "lyrics/"+self.curr_song.album+".json";
             $http.get(lyric_json).then((response)=>{
-                lyrics = response.data[self.curr_song.song_name];
+                var song = response.data[self.curr_song.song_name];
+                self.lyrics_src=song.url;
                 //hack to prevent duplicate ids in repeater
-                self.lyrics=_.map(lyrics,line=>{
+                self.lyrics=_.map(song.lyrics,line=>{
                     var obj = {};
                     obj['line']=line;
                     return obj;
                 });
-                console.log(self.lyrics);
             });
         }
+        
+        
 
         /* Updates variables to show detail for a specific song
          */ 
@@ -69,14 +81,48 @@ songApp.component('songList',{
             }
             self.fetchLyrics();
         };
-        
+       
+
+        /* Search song lyric JSONs album by album
+         */ 
+        this.searchByLyrics = function() { 
+            self.queryResults = [];
+            //make search case-insensitive
+            var query = self.query.toUpperCase();
+            //top loop: For each album,
+            _.each(self.albums,function(album){
+                var lyric_json = "lyrics/"+album+".json";
+                //get the lyrics of every song in the album
+                $http.get(lyric_json).then((response)=>{
+                    //then for every song in the album
+                    _.each(response.data,function(song){
+                        //and for every line in the song
+                        var song_added = false;
+                        _.each(song.lyrics,function(line){
+                            //print it
+                            if(line.toUpperCase().indexOf(query) != -1 && !song_added){
+                                //here's the inefficient part: find the song
+                                //in our songlist with a matching title
+                                var toAdd= _.where(self.songs,{song_name:song.title})[0];
+                                self.queryResults.push(toAdd);
+                                song_added = true;
+                            }
+                        });
+                    });
+                });
+            });
+        } 
+
         /* Updates the list of displayed values
          */
         this.updateQueryResults = function(){
-            console.log(self.order);
-            var searchObj = {};
-            searchObj[self.searchParam] = self.query;
-            self.queryResults=$filter('filter')(self.songs,searchObj,self.order);
+            if(self.searchParam == 'lyrics'){
+                this.searchByLyrics();
+            } else {
+                var searchObj = {};
+                searchObj[self.searchParam] = self.query;
+                self.queryResults=$filter('filter')(self.songs,searchObj,self.order);
+            }
         };
 
         /* Changes the list of displayed values based on a new query
