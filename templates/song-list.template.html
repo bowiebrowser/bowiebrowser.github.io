@@ -11,8 +11,9 @@
                         <h2>{{$ctrl.curr_song.album}} - {{$ctrl.curr_song.song_name}}</h2>
                     </div>
                     <div class="iframe-holder">
-                        <iframe src="{{$ctrl.url}}" frameborder="0" allowfullscreen>
-                        </iframe>
+                      <div id="player">
+                          <div id="yt_placeholder" style="width: 100%"></div>
+                      </div>
                     </div>
                 </div>
                 </div>

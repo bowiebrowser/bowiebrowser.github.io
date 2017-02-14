@@ -28,14 +28,93 @@ var bowieAlbums = [
     "Blackstar"
 ];
 
+
 var songApp = angular.module('songApp',
         ["ngRoute","songDetail"]
 );
 
+songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootScope){
+    var youtube = {
+        ready: false,
+        player: null,
+        playerId: null,
+        videoId: null,
+        videoTitle: null,
+        playerHeight: '100%',
+        playerWidth: '100%'
+    };
+
+    var self=this;
+    /* Bind the youtube player to an HTML element
+     */
+    this.bindPlayer = function (elementId) {
+        youtube.playerId = elementId;
+    };
+    
+    /* Create a new youtube player using the Youtube API
+     */
+    this.createPlayer = function () {
+        return new YT.Player(youtube.playerId, {
+            height: youtube.playerHeight,
+            width: youtube.playerWidth,
+            playerVars: {
+                  rel: 0,
+                  showinfo: 0,
+                  autoplay: 0
+            },
+            events: {
+                onStateChange: this.onPlayerStateChange
+            }
+        });
+    };
+
+    /* Hackish way to call function from controller on event
+     */
+    this.setMaster = function(master){
+        self.master = master;
+    };
+
+    this.onPlayerStateChange = function(event){
+        if(self.master){
+            self.master.onPlayerStateChange(event);
+        }else if(event.data === 0){
+            console.log("Youtube Service has no master :(");
+        }
+    };
+
+    this.launchPlayer = function (id,autoPlay) {
+        youtube.player.loadVideoById(id);
+        youtube.videoId = id;
+        if(!autoPlay) youtube.player.stopVideo();
+    };
+
+    this.loadPlayer = function () {
+        if (youtube.ready && youtube.playerId) {
+            if (youtube.player) {
+                youtube.player.destroy();
+            }
+            youtube.player = self.createPlayer();
+        }
+    };
+    
+    this.isReady = function(){
+        return youtube.player !== null;
+    };
+
+    $window.onYouTubeIframeAPIReady = function () {
+        youtube.ready = true;
+        self.bindPlayer('yt_placeholder');
+        self.loadPlayer();
+        $rootScope.$apply();
+    };
+
+}]);
+
 songApp.component('songList',{
     templateUrl:'templates/song-list.template.html',
-    controller: ['$scope','$http','$filter',
-        function songController($scope,$http,$filter){
+    controller: ['$scope','$http','$filter','YoutubeService',
+    function songController($scope,$http,$filter,YoutubeService){
+
         /* Initialize Parameters
          */
         this.song = '';
@@ -44,13 +123,24 @@ songApp.component('songList',{
         this.query='';
         this.searchParam='album';
         this.queryResults={};
+        this.autoplay=0;
+        //parameters to be passed into the Youtube iframe api
+        this.events={'onStateChange':this.getNextVideo};
         var self=this;
-    
-        /* Enables page to display embedded youtube url
+
+        /* "main" function
+         * Get the initial state of the page after loading the song list
          */
-        this.trustURL=function(url){
-            return $sce.trustAsResourceUrl(url);
+        var init = function(){
+            $http.get('jsons/songs.json').then((response)=>{
+                self.songs = response.data;
+                var firstSong = _.sample(self.songs);
+                self.setSong(firstSong);
+                self.query = firstSong.album;
+                self.updateQueryResults();
+            });
         };
+        init();
         
         /* Get the lyrics for the current song from its json
          */
@@ -66,20 +156,41 @@ songApp.component('songList',{
                     return obj;
                 });
             });
-        }
-        
-        
+        };
 
+        /* Play the next video in the search queue in sequence
+         */
+        this.onPlayerStateChange = function(event){
+            if(event.data === 0){
+                this.playNextVideo();
+            }
+        };
+
+        this.playNextVideo = function(){
+            //check to see if the current song exists in queryResults
+            var currVidLoc = _.indexOf(self.queryResults,self.curr_song);
+            //if it is, make the next video in the list the current one
+            if(currVidLoc !=-1 && currVidLoc < self.queryResults.length-1){
+                self.setSong(self.queryResults[currVidLoc+1],true);
+            }
+        };
+        /* Calls our youtube service to start a new video
+         */
+        this.updateYoutubePlayer = function(){
+            if(YoutubeService.isReady()){
+                YoutubeService.setMaster(self);
+                YoutubeService.launchPlayer(self.curr_song.id,self.autoplay);
+            }else{
+                setTimeout(this.updateYoutubePlayer,1500);
+            }
+        }
         /* Updates variables to show detail for a specific song
          */ 
         this.setSong= function(song,autoplay){
+            self.autoplay = autoplay;
             self.curr_song = song;
-            var songID = song.id;
-            self.url = "https://www.youtube.com/embed/"+songID;
-            if(autoplay){
-                self.url+="?autoplay=1";
-            }
             self.fetchLyrics();
+            self.updateYoutubePlayer();
         };
        
 
@@ -139,21 +250,19 @@ songApp.component('songList',{
                 self.updateQueryResults();
             }
         };
-
-        /* "main" function
-         * Get the initial state of the page after loading the song list
-         */
-        $http.get('jsons/songs.json').then((response)=>{
-            this.songs = response.data;
-            var firstSong = _.sample(this.songs);
-            this.setSong(firstSong);
-            this.query = firstSong.album;
-            this.updateQueryResults();
-        });
-
     }],
 });
 
+
+songApp.run(function () {
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+});
+
+/* songDetail is currently depricated
+ */
 songDetail.component('songDetail',{
     templateUrl:'templates/song-detail.template.html',
     controller:['$http','$routeParams','$sce',function($http,$routeParams,$sce){
