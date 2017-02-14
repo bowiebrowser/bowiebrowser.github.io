@@ -181,7 +181,6 @@ songApp.component('songList',{
                 YoutubeService.setMaster(self);
                 YoutubeService.launchPlayer(self.curr_song.id,self.autoplay);
             }else{
-                setTimeout(this.updateYoutubePlayer,1500);
             }
         }
         /* Updates variables to show detail for a specific song
