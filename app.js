@@ -130,12 +130,13 @@ songApp.component('songList',{
 
         /* "main" function
          * Get the initial state of the page after loading the song list
+         * and set the search feature to a random site
          */
         var init = function(){
             $http.get('jsons/songs.json').then((response)=>{
                 self.songs = response.data;
                 var firstSong = _.sample(self.songs);
-                self.setSong(firstSong);
+                //self.setSong(firstSong);
                 self.query = firstSong.album;
                 self.updateQueryResults();
             });
