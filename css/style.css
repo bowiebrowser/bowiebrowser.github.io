@@ -49,6 +49,14 @@ h2{
 .panel{
     margin:10px;
 }
+
+#queryResultsList {
+    list-style-type: none;
+    padding-left: 0px;
+}
+#queryResultsList li {
+    list-style-type: none;
+}
 /*
 .panel-right-side{
     margin-right:20px;

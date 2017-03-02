@@ -100,27 +100,27 @@
             </div>
 
             <div class="col-12">
-              <div ng-repeat="song in $ctrl.queryResults">
-              <div class="panel panel-default panel-right-side" 
-                  style="margin-bottom:5px" 
-                  ng-click="$ctrl.setSong(song,true)">
-                <div class="panel-body" style="padding:5px">
-                  <div class="row">
-                      <div class="col-md-4">
-                          <img src="{{song.pic}}"/>
+              <ul id="queryResultsList">
+                  <li ng-repeat="song in $ctrl.queryResults">
+                  <div class="panel panel-default panel-right-side" 
+                      style="margin-bottom:5px" ng-click="$ctrl.setSong(song,true)">
+                    <div class="panel-body" style="padding:5px">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <img src="{{song.pic}}"/>
+                          </div>
+                          <div class="col-md-8">
+                            <p class="nav-link">{{song.album}} Track {{song.track_number}}: 
+                                <a href="" >{{song.song_name}}</a>
+                                ({{song.time}})
+                            </p>
+                          </div>
                       </div>
-                      <div class="col-md-8">
-                        <p class="nav-link">{{song.album}} Track {{song.track_number}}: 
-                            <a href="" >{{song.song_name}}</a>
-                            ({{song.time}})
-                        </p>
-                      </div>
-                  </div>
-                </div>
-                </div>
-              </div>
+                    </div>
+                    </div>
+                  </li>
+              </ul>
             </div>
-
         </div>
     </div>
 </div>

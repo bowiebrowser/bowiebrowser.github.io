@@ -333,3 +333,7 @@ songApp.config(['$locationProvider','$routeProvider','$sceProvider',
                 otherwise('/songs');
         }
 ]);
+$(document).ready(function(){
+    $("#queryResultsList").sortable();
+    $("#queryResultsList").disableSelection();
+});
