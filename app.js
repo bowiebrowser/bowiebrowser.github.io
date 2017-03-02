@@ -110,10 +110,13 @@ songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootS
 
 }]);
 
+songApp.service('songSearcher',['$http','$filter',function songSearcher($http,$filter){
+}]);
+
 songApp.component('songList',{
     templateUrl:'templates/song-list.template.html',
-    controller: ['$scope','$http','$filter','YoutubeService',
-    function songController($scope,$http,$filter,YoutubeService){
+    controller: ['$http','$filter','YoutubeService',
+    function songController($http,$filter,YoutubeService){
 
         /* Initialize Parameters
          */
@@ -122,6 +125,7 @@ songApp.component('songList',{
         this.albums = bowieAlbums;
         this.query='';
         this.searchParam='album';
+        this.playParam='autoplay';
         this.queryResults={};
         this.autoplay=0;
         //parameters to be passed into the Youtube iframe api
@@ -163,7 +167,30 @@ songApp.component('songList',{
          */
         this.onPlayerStateChange = function(event){
             if(event.data === 0){
-                this.playNextVideo();
+                //the current song finished
+                if(this.playParam == 'autoplay'){
+                    //play the next video in the currently displayed playlist
+                    //check to see if the current song exists in queryResults
+                    var currVidLoc = _.indexOf(self.queryResults,self.curr_song);
+                    //if it is, make the next video in the list the current one
+                    if(currVidLoc !=-1 && currVidLoc < self.queryResults.length-1){
+                        self.setSong(self.queryResults[currVidLoc+1],true);
+                    }
+                } else if (this.playParam == 'repeat') {
+                    //play the same song again
+                    self.setSong(self.curr_song,true);
+
+                } else if (this.playParam == 'shuffle') {
+                    //pick a random song from the current playlist
+                    self.setSong(_.sample(self.queryResults),true);
+
+                } else if (this.playParam == 'random') {
+                    //pick a random song from all songs
+                    self.setSong(_.sample(self.songs),true);
+
+                } else if (this.playParam == 'single') {
+                    //don't update anything
+                }
             }
         };
 

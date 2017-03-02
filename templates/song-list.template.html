@@ -5,7 +5,11 @@
     <div class="col-md-6">
         <div class="row" ng-hide="$ctrl.curr_song != undefined" >
             <div class="col-12 text-center">
-                <h2>click a video from the list to play</h2>
+                <div class="panel panel-default panel-left-side">
+                  <div class="panel-body">
+                    <h2>click a video from the list to play</h2>
+                  </div>
+                </div>
             </div>
         </div>
         <div class="row" ng-hide="$ctrl.curr_song == undefined" >
@@ -55,27 +59,35 @@
             <div class="panel-body">
 
             <div class="row">
-              <div class = "col-md-6 form-group">
+              <div class = "col-md-3 form-group">
                   <label>Search By</label>
                   <select class="form-control" id="searchTypeSelect" ng-model="$ctrl.searchParam">
                       <option value='album'>Album</option> 
                       <option value='song_name'>Song Name</option> 
-                      <option value='year'>Year</option> 
                       <option value='lyrics'>Lyrics</option> 
-                      <option value='$'>Any</option> 
                   </select>
               </div>
-              <div ng-hide="$ctrl.searchParam != 'album'" class = "col-md-6 form-group">
+              <div ng-hide="$ctrl.searchParam != 'album'" class = "col-md-5 form-group">
                   <label>Album</label>
                   <select class="form-control" ng-model="$ctrl.query">
                     <option ng-repeat="album in $ctrl.albums" ng-click="$ctrl.updateByQuery(album)">{{album}}</option>
                     <option ng-click="$ctrl.updateByQuery('$')">All</option>
                   </select>
               </div>
-              <div ng-hide="$ctrl.searchParam=='album'" class="col-md-6 form-group">
+              <div ng-hide="$ctrl.searchParam=='album'" class="col-md-5 form-group">
                   <label>Search Term</label>
                   <input class="form-control" type="text" ng-model="$ctrl.query"
                           ng-keypress="$ctrl.updateOnKeyPress($event.keyCode)">
+              </div>
+              <div class="col-md-4 form-group">
+                  <label>Play Mode</label>
+                  <select class="form-control" ng-model="$ctrl.playParam">
+                      <option value='autoplay'>Autoplay</option>
+                      <option value='single'>Single</option>
+                      <option value='repeat'>Repeat</option>
+                      <option value='shuffle'>Shuffle</option>
+                      <option value='random'>Random</option>
+                  </select>
               </div>
               <div class="col-12 text-center">
                 <button type="submit" class="btn btn-primary" ng-click="$ctrl.updateQueryResults()"
