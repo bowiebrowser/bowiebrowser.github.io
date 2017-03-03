@@ -94,6 +94,12 @@ songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootS
         return youtube.player !== null;
     };
 
+    this.reloadPlayer = function(){
+        if(youtube.ready && document.getElementById('yt_placeholder')){
+            self.bindPlayer('yt_placeholder');
+            self.loadPlayer();
+        }
+    }
     $window.onYouTubeIframeAPIReady = function () {
         youtube.ready = true;
         self.bindPlayer('yt_placeholder');
@@ -137,6 +143,7 @@ songApp.component('songList',{
          * and set the search feature to a random site
          */
         var init = function(){
+            YoutubeService.reloadPlayer();
             $http.get(`jsons/${self.artist}/songs.json`).then((response)=>{
                 self.songs = response.data;
                 var firstSong = _.sample(self.songs);
@@ -324,9 +331,14 @@ songApp.config(['$locationProvider','$routeProvider','$sceProvider',
             $sceProvider.enabled(false);
             $locationProvider.hashPrefix('!'); 
             $routeProvider.
+                when('/songs',{
+                    templateUrl:'templates/about-page.template.html'
+                }).when('/about',{
+                    templateUrl:'templates/about-page.template.html'
+                }).
                 when('/:artist',{
                     template: '<artist-nav></artist-nav><song-list></song-list>'
                 }).
-                otherwise('/DavidBowie');
+                otherwise('/about');
         }
 ]);
