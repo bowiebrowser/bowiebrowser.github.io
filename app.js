@@ -1,33 +1,26 @@
 var songDetail = angular.module('songDetail',['ngRoute']);
 
-var bowieAlbums = [
-    'David Bowie',
-    'Space Oddity',
-    'The Man Who Sold the World',
-    'Hunky Dory',
-    'Ziggy Stardust',
-    'Aladdin Sane',
-    'Pin Ups',
-    'Diamond Dogs',
-    'Young Americans',
-    'Station to Station',
-    'Low',
-    'Heroes',
-    'Lodger',
-    'Scary Monsters',
-    "Let's Dance",
-    "Tonight",
-    "Never Let Me Down",
-    "Black Tie White Noise",
-    "Outside",
-    "Earthling",
-    "Hours",
-    "Heathen",
-    "Reality",
-    "The Next Day",
-    "Blackstar"
-];
-
+var allAlbums = {
+    'DavidBowie': [
+        'David Bowie', 'Space Oddity',
+        'The Man Who Sold the World',
+        'Hunky Dory', 'Ziggy Stardust',
+        'Aladdin Sane', 'Pin Ups',
+        'Diamond Dogs', 'Young Americans',
+        'Station to Station', 'Low', 'Heroes',
+        'Lodger', 'Scary Monsters', "Let's Dance",
+        "Tonight", "Never Let Me Down",
+        "Black Tie White Noise", "Outside",
+        "Earthling", "Hours", "Heathen",
+        "Reality", "The Next Day", "Blackstar"
+    ],
+    'TalkingHeads': [
+        "77", "More Songs About Buildings and Food",
+        "Fear of Music", "Remain in Light",
+        "Speaking in Tongues",
+        "Little Creatures", "True Stories",
+    ]
+};
 
 var songApp = angular.module('songApp',
         ["ngRoute","songDetail"]
@@ -113,16 +106,23 @@ songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootS
 songApp.service('songSearcher',['$http','$filter',function songSearcher($http,$filter){
 }]);
 
+songApp.component('artistNav',{
+    templateUrl:'templates/artist-nav.template.html',
+    controller: ['$routeParams', function artistNavController($routeParams){
+        this.artist = $routeParams.artist;
+    }]
+});
 songApp.component('songList',{
     templateUrl:'templates/song-list.template.html',
-    controller: ['$http','$filter','YoutubeService',
-    function songController($http,$filter,YoutubeService){
+    controller: ['$http','$filter','$routeParams','YoutubeService',
+    function songController($http,$filter,$routeParams,YoutubeService){
 
         /* Initialize Parameters
          */
         this.song = '';
         this.url='';
-        this.albums = bowieAlbums;
+        this.artist = $routeParams.artist;
+        this.albums = allAlbums[this.artist];
         this.query='';
         this.searchParam='album';
         this.playParam='autoplay';
@@ -137,7 +137,7 @@ songApp.component('songList',{
          * and set the search feature to a random site
          */
         var init = function(){
-            $http.get('jsons/songs.json').then((response)=>{
+            $http.get(`jsons/${self.artist}/songs.json`).then((response)=>{
                 self.songs = response.data;
                 var firstSong = _.sample(self.songs);
                 //self.setSong(firstSong);
@@ -150,7 +150,7 @@ songApp.component('songList',{
         /* Get the lyrics for the current song from its json
          */
         this.fetchLyrics= function(){
-            var lyric_json = "lyrics/"+self.curr_song.album+".json";
+            var lyric_json = `lyrics/${self.artist}/${self.curr_song.album}.json`;
             $http.get(lyric_json).then((response)=>{
                 var song = response.data[self.curr_song.song_name];
                 self.lyrics_src=song.url;
@@ -229,7 +229,7 @@ songApp.component('songList',{
             var query = self.query.toUpperCase();
             //top loop: For each album,
             _.each(self.albums,function(album){
-                var lyric_json = "lyrics/"+album+".json";
+                var lyric_json = `lyrics/${self.artist}/${album}.json`;
                 //get the lyrics of every song in the album
                 $http.get(lyric_json).then((response)=>{
                     //then for every song in the album
@@ -324,16 +324,9 @@ songApp.config(['$locationProvider','$routeProvider','$sceProvider',
             $sceProvider.enabled(false);
             $locationProvider.hashPrefix('!'); 
             $routeProvider.
-                when('/songs',{
-                    template: '<song-list></song-list>'
+                when('/:artist',{
+                    template: '<artist-nav></artist-nav><song-list></song-list>'
                 }).
-                when('/songs/:song',{
-                    template: '<song-detail></song-detail>'
-                }).
-                otherwise('/songs');
+                otherwise('/DavidBowie');
         }
 ]);
-$(document).ready(function(){
-    $("#queryResultsList").sortable();
-    $("#queryResultsList").disableSelection();
-});
