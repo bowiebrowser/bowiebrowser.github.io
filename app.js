@@ -102,6 +102,7 @@ songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootS
     }
     $window.onYouTubeIframeAPIReady = function () {
         youtube.ready = true;
+        console.log("Youtube Player Loaded");
         self.bindPlayer('yt_placeholder');
         self.loadPlayer();
         $rootScope.$apply();
@@ -111,6 +112,13 @@ songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootS
 
 songApp.service('songSearcher',['$http','$filter',function songSearcher($http,$filter){
 }]);
+songApp.component('aboutPage',{
+    templateUrl:'templates/about-page.template.html',
+    //kick off the youtube controller in the background if the user loads to the about page
+    controller: ['YoutubeService',function aboutController(YoutubeService){
+            YoutubeService.reloadPlayer();
+    }],
+});
 
 songApp.component('artistNav',{
     templateUrl:'templates/artist-nav.template.html',
@@ -118,6 +126,7 @@ songApp.component('artistNav',{
         this.artist = $routeParams.artist;
     }]
 });
+
 songApp.component('songList',{
     templateUrl:'templates/song-list.template.html',
     controller: ['$http','$filter','$routeParams','YoutubeService',
@@ -295,46 +304,15 @@ songApp.run(function () {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 });
 
-/* songDetail is currently depricated
- */
-songDetail.component('songDetail',{
-    templateUrl:'templates/song-detail.template.html',
-    controller:['$http','$routeParams','$sce',function($http,$routeParams,$sce){
-        var self=this;
-        this.name = $routeParams.song;
-        this.setParams=function(){
-                //find the song object matching the song's name
-                var loc = _.findIndex(self.songs,song=>
-                        (song.song_name==self.name)
-                );
-                self.song = this.songs[loc];
-                self.url = "https://www.youtube.com/embed/"+this.song.id+"?autoplay=1";
-        };
-        if(allSongs == undefined){
-            $http.get('jsons/songs.json').then((response)=>{
-                this.songs = response.data;
-                allSongs = this.songs;
-                this.setParams();
-            });
-        } else {
-            this.songs = allSongs;
-            this.setParams();
-        }
-        this.trustURL=function(url){
-            return $sce.trustAsResourceUrl(url);
-        };
-    }]
-});
-
 songApp.config(['$locationProvider','$routeProvider','$sceProvider',
         function($locationProvider,$routeProvider,$sceProvider){
             $sceProvider.enabled(false);
             $locationProvider.hashPrefix('!'); 
             $routeProvider.
                 when('/songs',{
-                    templateUrl:'templates/about-page.template.html'
+                    template:'<about-page></about-page>'
                 }).when('/about',{
-                    templateUrl:'templates/about-page.template.html'
+                    template:'<about-page></about-page>'
                 }).
                 when('/:artist',{
                     template: '<artist-nav></artist-nav><song-list></song-list>'
