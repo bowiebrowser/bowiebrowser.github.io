@@ -1,29 +1,5 @@
-var songDetail = angular.module('songDetail',['ngRoute']);
-
-var allAlbums = {
-    'DavidBowie': [
-        'David Bowie', 'Space Oddity',
-        'The Man Who Sold the World',
-        'Hunky Dory', 'Ziggy Stardust',
-        'Aladdin Sane', 'Pin Ups',
-        'Diamond Dogs', 'Young Americans',
-        'Station to Station', 'Low', 'Heroes',
-        'Lodger', 'Scary Monsters', "Let's Dance",
-        "Tonight", "Never Let Me Down",
-        "Black Tie White Noise", "Outside",
-        "Earthling", "Hours", "Heathen",
-        "Reality", "The Next Day", "Blackstar"
-    ],
-    'TalkingHeads': [
-        "77", "More Songs About Buildings and Food",
-        "Fear of Music", "Remain in Light",
-        "Speaking in Tongues",
-        "Little Creatures", "True Stories",
-    ]
-};
-
 var songApp = angular.module('songApp',
-        ["ngRoute","songDetail"]
+        ["ngRoute"]
 );
 
 songApp.service('YoutubeService',['$window','$rootScope',function($window,$rootScope){
@@ -137,7 +113,7 @@ songApp.component('songList',{
         this.song = '';
         this.url='';
         this.artist = $routeParams.artist;
-        this.albums = allAlbums[this.artist];
+        this.albums = [];
         this.query='';
         this.searchParam='album';
         this.playParam='autoplay';

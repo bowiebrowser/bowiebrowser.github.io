@@ -1,0 +1,65 @@
+body {
+    background: #fff url(../../assets/surfers.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0 100%;
+}
+.iframe-holder{
+  position:relative;
+  width:100%;
+  height: 0;
+  padding-bottom: 75%; 
+}
+iframe {
+  position:absolute;
+  width: 100%; 
+  height:100%; 
+  left:0;
+  top:0;
+}
+.navbar{
+    background: rgba(150, 150, 230, 0.9);
+    width: 100%;
+}
+
+.panel{
+    background: rgba(255, 255, 255, 0.8);
+}
+.navbar-brand{
+    font-size: 2em;
+    font-weight: bold;
+    font-family:"Impact";
+    color: #c9231a;
+    -webkit-text-stroke: 1px #f9d63f;
+      
+}
+.navbar-brand:hover{
+    color: #b9130a;
+}
+h2{
+    color: black;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.about-text{
+    color: black;
+    font-size: 1em;
+}
+.nav-link{
+    color: black;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.panel{
+    margin:10px;
+}
+
+#queryResultsList {
+    list-style-type: none;
+    padding-left: 0px;
+}
+#queryResultsList li {
+    list-style-type: none;
+}
