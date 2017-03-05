@@ -156,13 +156,21 @@ songApp.component('songList',{
             $http.get(`jsons/${self.artist}/songs.json`).then((response)=>{
                 self.songs = response.data;
                 var firstSong = _.sample(self.songs);
-                //self.setSong(firstSong);
+                self.albums = self.getAlbums(self.songs);
                 self.query = firstSong.album;
                 self.updateQueryResults();
             });
         };
         init();
         
+        this.getAlbums=function(songs){
+            var albums = [];
+            _.each(songs,song=>{
+                if(song.album && albums.indexOf(song.album) == -1)
+                    albums.push(song.album);
+            });
+            return albums;
+        }
         /* Get the lyrics for the current song from its json
          */
         this.fetchLyrics= function(){

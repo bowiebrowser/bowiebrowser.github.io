@@ -1,0 +1,101 @@
+body {
+    background: #000 url('../../assets/zoo_tv.png'); 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50% 0;
+}
+
+.iframe-holder{
+  position:relative;
+  width:100%;
+  height: 0;
+  padding-bottom: 75%; 
+}
+
+iframe {
+  position:absolute;
+  width: 100%; 
+  height:100%; 
+  left:0;
+  top:0;
+}
+
+.navbar{
+    background:repeating-linear-gradient(
+        315deg,
+        #D00,
+        #D00 30px,
+        black 30px,
+        black 60px
+    ); 
+    border-radius: 0;
+    border:0px;
+    width: 100%;
+}
+
+.panel{
+    background: rgba(200, 200, 200, 0.8);
+    border:1px solid rgb(210,210,210);
+}
+
+p.nav-link > a{
+    color:rgb(200,0,0);
+}
+
+.navbar-brand{
+    color: white;
+    font-size: 2em;
+    font-family:"Palatino";
+}
+.navbar-brand:hover{
+    color:#CCC;
+}
+h2{
+    color: black;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.about-text{
+    color: black;
+    font-size: 1em;
+}
+.nav-link{
+    color: black;
+    font-weight: bold;
+    font-size: 1em;
+}
+a.nav-link{
+    color: white;
+    font-weight:none;
+    font-family:"Palatino";
+}
+.panel{
+    margin:10px;
+}
+
+#queryResultsList {
+    list-style-type: none;
+    padding-left: 0px;
+}
+#queryResultsList li {
+    list-style-type: none;
+}
+
+.btn {
+    background:rgb(200,0,0);
+    border: 0px solid black;
+    font-weight:bold;
+}
+.btn:hover {
+    background: rgb(150,0,0);
+    border: 0px solid black;
+}
+/*
+.panel-right-side{
+    margin-right:20px;
+}
+@media (max-width: 767px) {
+    .panel-right-side { margin-left:20px; }
+}
+*/
