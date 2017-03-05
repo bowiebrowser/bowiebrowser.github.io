@@ -1,7 +1,5 @@
 body {
-  background-image: linear-gradient(to bottom, white, white 50%, red 50%);
-  background-attachment:fixed;
-  background-repeat: no-repeat;
+    background-image: url('../../assets/more_songs_about.jpg');
 }
 .iframe-holder{
   position:relative;
@@ -17,14 +15,12 @@ iframe {
   top:0;
 }
 .navbar{
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 200, 200, .7);
     width: 100%;
 }
 
 .panel{
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 0px;
-    border: 2px solid black;
+    background: rgba(255, 200, 200, 0.8);
     margin:10px;
 }
 .navbar-brand{
@@ -48,18 +44,15 @@ h2{
     font-size: 1em;
 }
 .form-control{
-    border-radius:0px;
-    border: 2px solid black;
 }
 .btn {
-    background:red;
-    border: 2px solid black;
-    border-radius:0px;
+    background:rgb(200,0,0);
+    border: 0px solid black;
     font-weight:bold;
 }
 .btn:hover {
-    background: rgb(200,0,0);
-    border: 2px solid black;
+    background: rgb(150,0,0);
+    border: 0px solid black;
 }
 .logo-head{
     background:red;
